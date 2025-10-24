@@ -1,0 +1,19 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/app                 # monta tu código dentro del contenedor (útil dev)
+      - sqlite_data:/app/       # volumen para persistir archivos (incl. Universidad.db)
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.example
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DJANGO_SETTINGS_MODULE=CRUD_Universidad.settings
+
+volumes:
+  sqlite_data:
